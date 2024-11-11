@@ -30,7 +30,7 @@ set -e
 
 export GITHUB_SOURCE="v1.1.0"
 export SCRIPT_RELEASE="v1.1.0"
-export GITHUB_BASE_URL="https://raw.githubusercontent.com/bybitbee/phynix"
+export GITHUB_BASE_URL="https://raw.githubusercontent.com/Seralius/phynix"
 
 LOG_PATH="/var/log/pterodactyl-installer.log"
 
