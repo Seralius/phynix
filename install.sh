@@ -4,9 +4,9 @@ set -e
 
 ######################################################################################
 #                                                                                    #
-# Project 'phynix'                                                    #
+# Project 'pterodactyl-installer'                                                    #
 #                                                                                    #
-# Copyright Phynie <bybitbeebyyroee@proton.me>                    #
+# Copyright (C) 2018 - 2024, Vilhelm Prytz, <vilhelm@prytznet.se>                    #
 #                                                                                    #
 #   This program is free software: you can redistribute it and/or modify             #
 #   it under the terms of the GNU General Public License as published by             #
@@ -21,15 +21,15 @@ set -e
 #   You should have received a copy of the GNU General Public License                #
 #   along with this program.  If not, see <https://www.gnu.org/licenses/>.           #
 #                                                                                    #
-# https://github.com/bybitbee/phynix/blob/master/LICENSE #
+# https://github.com/pterodactyl-installer/pterodactyl-installer/blob/master/LICENSE #
 #                                                                                    #
 # This script is not associated with the official Pterodactyl Project.               #
-# https://github.com/bybitbee/phynix                     #
+# https://github.com/pterodactyl-installer/pterodactyl-installer                     #
 #                                                                                    #
 ######################################################################################
 
-export GITHUB_SOURCE="v1.0.0"
-export SCRIPT_RELEASE="v1.0.0"
+export GITHUB_SOURCE="v1.1.0"
+export SCRIPT_RELEASE="v1.1.0"
 export GITHUB_BASE_URL="https://raw.githubusercontent.com/bybitbee/phynix"
 
 LOG_PATH="/var/log/pterodactyl-installer.log"
@@ -41,7 +41,11 @@ if ! [ -x "$(command -v curl)" ]; then
   exit 1
 fi
 
-
+# Always remove lib.sh, before downloading it
+[ -f /tmp/lib.sh ] && rm -rf /tmp/lib.sh
+curl -sSL -o /tmp/lib.sh "$GITHUB_BASE_URL"/master/lib/lib.sh
+# shellcheck source=lib/lib.sh
+source /tmp/lib.sh
 
 execute() {
   echo -e "\n\n* pterodactyl-installer $(date) \n\n" >>$LOG_PATH
@@ -106,3 +110,5 @@ while [ "$done" == false ]; do
   [[ " ${valid_input[*]} " =~ ${action} ]] && done=true && IFS=";" read -r i1 i2 <<<"${actions[$action]}" && execute "$i1" "$i2"
 done
 
+# Remove lib.sh, so next time the script is run the, newest version is downloaded.
+rm -rf /tmp/lib.sh
