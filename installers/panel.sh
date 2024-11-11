@@ -107,7 +107,7 @@ ptdl_dl() {
   git clone https://github.com/pyrohost/panel.git /var/www/pterodactyl
   cd /var/www/pterodactyl
   npm i
-  pnpm ship || exit
+  npm run ship || exit
 
 
 
